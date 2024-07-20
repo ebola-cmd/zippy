@@ -1,6 +1,6 @@
 Zippy
 
-![image](https://github.com/user-attachments/assets/8ffd076c-f964-4883-bc15-258473e7a0c4)
+![image](https://github.com/user-attachments/assets/0a82ced4-26c8-4b46-8e15-03981f9f2644)
 
 
 Zippy is a Python project designed to perform various tasks efficiently. It provides a range of features aimed at simplifying complex operations and enhancing productivity.
@@ -32,5 +32,6 @@ You can also access specific features by using various command-line options and 
 Main Features
 
     Youtube downloader: Download mp3 or mp4 videos from youtube
+    To-do List: A simple To-do list which saves your tasks
 
 more features comming soon
