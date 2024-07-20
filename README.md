@@ -1,6 +1,6 @@
 Zippy
 
-![image](https://github.com/user-attachments/assets/51989c68-de70-4596-8717-e1db3c3a5af9)
+![image](https://github.com/user-attachments/assets/df472785-d0dd-411e-a366-2f8ff21e727a)
 
 
 
@@ -35,5 +35,6 @@ Main Features
     Youtube downloader: Download mp3 or mp4 videos from youtube
     To-do List: A simple To-do list which saves your tasks
     Games: Bunch of fun games to play if bored
+    News: Get lates world and sports news
 
 more features comming soon
