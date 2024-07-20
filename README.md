@@ -34,5 +34,6 @@ Main Features
 
     Youtube downloader: Download mp3 or mp4 videos from youtube
     To-do List: A simple To-do list which saves your tasks
+    Games: Bunch of fun games to play if bored
 
 more features comming soon
