@@ -1,6 +1,10 @@
 import os
 import yt_dlp
 import random
+import requests
+
+api_key = 'f174e728b77748e08cdfffd339894c41'
+base_url = 'https://newsapi.org/v2/top-headlines'
 
 if not os.path.exists('videos'):
     os.makedirs('videos')
@@ -22,13 +26,14 @@ def zippy():
     print('                                  \|___|/      ')
     print('')
     print(f"{GREEN}[>] {RESET}{BLUE}Created By{RESET}   : ebola-cmd")
-    print(f"{GREEN}[>] {RESET}{BLUE}Version{RESET}      : 1.2")
+    print(f"{GREEN}[>] {RESET}{BLUE}Version{RESET}      : 1.3")
     print('')
     print(f"{YELLOW}[!] Select a Option :{RESET}")
     print('')
     print(f"{GREEN}[0] {RESET}{BLUE}Youtube Downloader")
     print(f"{GREEN}[1] {RESET}{BLUE}To-do List")
     print(f"{GREEN}[2] {RESET}{BLUE}Games")
+    print(f"{GREEN}[3] {RESET}{BLUE}News")
     print('')
     
     choice = input(f"{GREEN}[>]{RESET}")
@@ -40,6 +45,9 @@ def zippy():
         
     if choice == "2":
         games()
+        
+    if choice == "3":
+        run_news_aggregator()
         
     else:
         input('invalid key')
@@ -652,5 +660,77 @@ def wordlefr():
         
     wordle()
     
+def fetch_news(category=None, query=None):
+    params = {
+        'apiKey': api_key,
+        'category': category,
+        'q': query,
+        'pageSize': 5  # Number of headlines to fetch
+    }
+    try:
+        response = requests.get(base_url, params=params)
+        response.raise_for_status()
+        news_data = response.json()
+        if news_data['status'] == 'ok':
+            return news_data['articles']
+        else:
+            print(f"Error: {news_data['message']}")
+            return []
+    except requests.exceptions.RequestException as e:
+        print(f"Network error: {e}")
+        return []
+
+def display_news(articles):
+    for i, article in enumerate(articles, 1):
+        print(f"{i}. {article['title']}")
+        print(f"   Source: {article['source']['name']}")
+        print(f"   Published At: {article['publishedAt']}")
+        print(f"   URL: {article['url']}")
+        print()
+
+def get_user_choice():
+    print("Select the type of news you want:")
+    print(f"{GREEN}[1] {RESET}{BLUE}World")
+    print(f"{GREEN}[2] {RESET}{BLUE}Sports")
+    choice = input(f"{GREEN}[>]{RESET}")
+    return choice
+
+def get_sport_choice():
+    print("Select the sport news you want:")
+    print(f"{GREEN}[1] {RESET}{BLUE}Cricket")
+    print(f"{GREEN}[2] {RESET}{BLUE}Soccer")
+    print(f"{GREEN}[3] {RESET}{BLUE}Basketball")
+    choice = input(f"{GREEN}[>]{RESET}")
+    return choice
+
+def run_news_aggregator():
+    user_choice = get_user_choice()
+    if user_choice == '1':
+        category = 'general'
+        query = None
+    elif user_choice == '2':
+        category = 'sports'
+        sport_choice = get_sport_choice()
+        if sport_choice == '1':
+            query = 'cricket'
+        elif sport_choice == '2':
+            query = 'soccer'
+        elif sport_choice == '3':
+            query = 'basketball'
+        else:
+            print("Invalid choice. Defaulting to general sports news.")
+            query = None
+    else:
+        print("Invalid choice. Defaulting to world news.")
+        category = 'general'
+        query = None
+
+    headlines = fetch_news(category=category, query=query)
+    display_news(headlines)
+    
+    input('press any key to continue...')
+    
+    zippy()
+
     
 zippy()
