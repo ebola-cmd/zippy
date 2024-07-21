@@ -35,6 +35,7 @@ def zippy():
     print(f"{GREEN}[1] {RESET}{BLUE}To-do List")
     print(f"{GREEN}[2] {RESET}{BLUE}Games")
     print(f"{GREEN}[3] {RESET}{BLUE}News")
+    print(f"{GREEN}[4] {RESET}{BLUE}Fitness Tracker")
     print('')
     
     choice = input(f"{GREEN}[>]{RESET}")
