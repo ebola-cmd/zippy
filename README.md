@@ -35,5 +35,6 @@ Main Features
     To-do List: A simple To-do list which saves your tasks
     Games: Bunch of fun games to play if bored
     News: Get lates world and sports news
+    Fitness Tracker: a simple fitness tracker which saves your workouts and also gives you points for it
 
 more features comming soon
