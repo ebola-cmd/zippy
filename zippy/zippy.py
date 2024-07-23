@@ -198,6 +198,7 @@ def games():
     print('')
     print(f"{GREEN}[0] {RESET}{BLUE}Football")
     print(f"{GREEN}[1] {RESET}{BLUE}Wordle")
+    print(f"{GREEN}[2] {RESET}{BLUE}BlackJack")
     print('')
     game = input(f"{GREEN}[>]{RESET}")
     if game == "0":
@@ -205,6 +206,9 @@ def games():
     
     if game == "1":
         wordlefr()
+    
+    if game == "2":
+        blackjack()
         
 def football():
     coins = 0
@@ -673,7 +677,524 @@ def wordlefr():
         zippy()
         
     wordle()
-    
+
+def blackjack():
+    # Suits and values
+    suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades']
+    values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
+
+    # ASCII art for cards
+    cards_art = {
+        'Hearts': {
+            '2': [
+                " _____ ",
+                "|2    |",
+                "|  ♥  |",
+                "|    2|",
+                " ¯¯¯¯ "
+            ],
+            '3': [
+                " _____ ",
+                "|3    |",
+                "|  ♥  |",
+                "|  ♥  |",
+                " ¯¯¯¯ "
+            ],
+            '4': [
+                " _____ ",
+                "|4    |",
+                "| ♥ ♥ |",
+                "| ♥ ♥ |",
+                " ¯¯¯¯ "
+            ],
+            '5': [
+                " _____ ",
+                "|5    |",
+                "| ♥ ♥ |",
+                "|  ♥  |",
+                " ¯¯¯¯ "
+            ],
+            '6': [
+                " _____ ",
+                "|6    |",
+                "| ♥ ♥ |",
+                "| ♥ ♥ |",
+                " ¯¯¯¯ "
+            ],
+            '7': [
+                " _____ ",
+                "|7    |",
+                "| ♥ ♥ |",
+                "| ♥ ♥ |",
+                " ¯¯¯¯ "
+            ],
+            '8': [
+                " _____ ",
+                "|8    |",
+                "| ♥ ♥ |",
+                "| ♥ ♥ |",
+                " ¯¯¯¯ "
+            ],
+            '9': [
+                " _____ ",
+                "|9    |",
+                "| ♥ ♥ |",
+                "| ♥ ♥ |",
+                " ¯¯¯¯ "
+            ],
+            '10': [
+                " _____ ",
+                "|10   |",
+                "| ♥ ♥ |",
+                "| ♥ ♥ |",
+                " ¯¯¯¯ "
+            ],
+            'J': [
+                " _____ ",
+                "|J    |",
+                "| ♥ ♥ |",
+                "| ♥ ♥ |",
+                " ¯¯¯¯ "
+            ],
+            'Q': [
+                " _____ ",
+                "|Q    |",
+                "| ♥ ♥ |",
+                "| ♥ ♥ |",
+                " ¯¯¯¯ "
+            ],
+            'K': [
+                " _____ ",
+                "|K    |",
+                "| ♥ ♥ |",
+                "| ♥ ♥ |",
+                " ¯¯¯¯ "
+            ],
+            'A': [
+                " _____ ",
+                "|A    |",
+                "| ♥ ♥ |",
+                "| ♥ ♥ |",
+                " ¯¯¯¯ "
+            ],
+        },
+        'Diamonds': {
+            '2': [
+                " _____ ",
+                "|2    |",
+                "|  ♦  |",
+                "|    2|",
+                " ¯¯¯¯ "
+            ],
+            '3': [
+                " _____ ",
+                "|3    |",
+                "|  ♦  |",
+                "|  ♦  |",
+                " ¯¯¯¯ "
+            ],
+            '4': [
+                " _____ ",
+                "|4    |",
+                "| ♦ ♦ |",
+                "| ♦ ♦ |",
+                " ¯¯¯¯ "
+            ],
+            '5': [
+                " _____ ",
+                "|5    |",
+                "| ♦ ♦ |",
+                "|  ♦  |",
+                " ¯¯¯¯ "
+            ],
+            '6': [
+                " _____ ",
+                "|6    |",
+                "| ♦ ♦ |",
+                "| ♦ ♦ |",
+                " ¯¯¯¯ "
+            ],
+            '7': [
+                " _____ ",
+                "|7    |",
+                "| ♦ ♦ |",
+                "| ♦ ♦ |",
+                " ¯¯¯¯ "
+            ],
+            '8': [
+                " _____ ",
+                "|8    |",
+                "| ♦ ♦ |",
+                "| ♦ ♦ |",
+                " ¯¯¯¯ "
+            ],
+            '9': [
+                " _____ ",
+                "|9    |",
+                "| ♦ ♦ |",
+                "| ♦ ♦ |",
+                " ¯¯¯¯ "
+            ],
+            '10': [
+                " _____ ",
+                "|10   |",
+                "| ♦ ♦ |",
+                "| ♦ ♦ |",
+                " ¯¯¯¯ "
+            ],
+            'J': [
+                " _____ ",
+                "|J    |",
+                "| ♦ ♦ |",
+                "| ♦ ♦ |",
+                " ¯¯¯¯ "
+            ],
+            'Q': [
+                " _____ ",
+                "|Q    |",
+                "| ♦ ♦ |",
+                "| ♦ ♦ |",
+                " ¯¯¯¯ "
+            ],
+            'K': [
+                " _____ ",
+                "|K    |",
+                "| ♦ ♦ |",
+                "| ♦ ♦ |",
+                " ¯¯¯¯ "
+            ],
+            'A': [
+                " _____ ",
+                "|A    |",
+                "| ♦ ♦ |",
+                "| ♦ ♦ |",
+                " ¯¯¯¯ "
+            ],
+        },
+        'Clubs': {
+            '2': [
+                " _____ ",
+                "|2    |",
+                "|  ♣  |",
+                "|    2|",
+                " ¯¯¯¯ "
+            ],
+            '3': [
+                " _____ ",
+                "|3    |",
+                "|  ♣  |",
+                "|  ♣  |",
+                " ¯¯¯¯ "
+            ],
+            '4': [
+                " _____ ",
+                "|4    |",
+                "| ♣ ♣ |",
+                "| ♣ ♣ |",
+                " ¯¯¯¯ "
+            ],
+            '5': [
+                " _____ ",
+                "|5    |",
+                "| ♣ ♣ |",
+                "|  ♣  |",
+                " ¯¯¯¯ "
+            ],
+            '6': [
+                " _____ ",
+                "|6    |",
+                "| ♣ ♣ |",
+                "| ♣ ♣ |",
+                " ¯¯¯¯ "
+            ],
+            '7': [
+                " _____ ",
+                "|7    |",
+                "| ♣ ♣ |",
+                "| ♣ ♣ |",
+                " ¯¯¯¯ "
+            ],
+            '8': [
+                " _____ ",
+                "|8    |",
+                "| ♣ ♣ |",
+                "| ♣ ♣ |",
+                " ¯¯¯¯ "
+            ],
+            '9': [
+                " _____ ",
+                "|9    |",
+                "| ♣ ♣ |",
+                "| ♣ ♣ |",
+                " ¯¯¯¯ "
+            ],
+            '10': [
+                " _____ ",
+                "|10   |",
+                "| ♣ ♣ |",
+                "| ♣ ♣ |",
+                " ¯¯¯¯ "
+            ],
+            'J': [
+                " _____ ",
+                "|J    |",
+                "| ♣ ♣ |",
+                "| ♣ ♣ |",
+                " ¯¯¯¯ "
+            ],
+            'Q': [
+                " _____ ",
+                "|Q    |",
+                "| ♣ ♣ |",
+                "| ♣ ♣ |",
+                " ¯¯¯¯ "
+            ],
+            'K': [
+                " _____ ",
+                "|K    |",
+                "| ♣ ♣ |",
+                "| ♣ ♣ |",
+                " ¯¯¯¯ "
+            ],
+            'A': [
+                " _____ ",
+                "|A    |",
+                "| ♣ ♣ |",
+                "| ♣ ♣ |",
+                " ¯¯¯¯ "
+            ],
+        },
+        'Spades': {
+            '2': [
+                " _____ ",
+                "|2    |",
+                "|  ♠  |",
+                "|    2|",
+                " ¯¯¯¯ "
+            ],
+            '3': [
+                " _____ ",
+                "|3    |",
+                "|  ♠  |",
+                "|  ♠  |",
+                " ¯¯¯¯ "
+            ],
+            '4': [
+                " _____ ",
+                "|4    |",
+                "| ♠ ♠ |",
+                "| ♠ ♠ |",
+                " ¯¯¯¯ "
+            ],
+            '5': [
+                " _____ ",
+                "|5    |",
+                "| ♠ ♠ |",
+                "|  ♠  |",
+                " ¯¯¯¯ "
+            ],
+            '6': [
+                " _____ ",
+                "|6    |",
+                "| ♠ ♠ |",
+                "| ♠ ♠ |",
+                " ¯¯¯¯ "
+            ],
+            '7': [
+                " _____ ",
+                "|7    |",
+                "| ♠ ♠ |",
+                "| ♠ ♠ |",
+                " ¯¯¯¯ "
+            ],
+            '8': [
+                " _____ ",
+                "|8    |",
+                "| ♠ ♠ |",
+                "| ♠ ♠ |",
+                " ¯¯¯¯ "
+            ],
+            '9': [
+                " _____ ",
+                "|9    |",
+                "| ♠ ♠ |",
+                "| ♠ ♠ |",
+                " ¯¯¯¯ "
+            ],
+            '10': [
+                " _____ ",
+                "|10   |",
+                "| ♠ ♠ |",
+                "| ♠ ♠ |",
+                " ¯¯¯¯ "
+            ],
+            'J': [
+                " _____ ",
+                "|J    |",
+                "| ♠ ♠ |",
+                "| ♠ ♠ |",
+                " ¯¯¯¯ "
+            ],
+            'Q': [
+                " _____ ",
+                "|Q    |",
+                "| ♠ ♠ |",
+                "| ♠ ♠ |",
+                " ¯¯¯¯ "
+            ],
+            'K': [
+                " _____ ",
+                "|K    |",
+                "| ♠ ♠ |",
+                "| ♠ ♠ |",
+                " ¯¯¯¯ "
+            ],
+            'A': [
+                " _____ ",
+                "|A    |",
+                "| ♠ ♠ |",
+                "| ♠ ♠ |",
+                " ¯¯¯¯ "
+            ],
+        }
+    }
+
+    def display_card(card):
+        suit, value = card
+        art = cards_art[suit][value]
+        for line in art:
+            print(line)
+
+    def deal_card():
+        suit = random.choice(suits)
+        value = random.choice(values)
+        return (suit, value)
+
+    def calculate_hand_value(hand):
+        value = 0
+        num_aces = 0
+        for card in hand:
+            _, rank = card
+            if rank in ['J', 'Q', 'K']:
+                value += 10
+            elif rank == 'A':
+                num_aces += 1
+                value += 11
+            else:
+                value += int(rank)
+        
+        while value > 21 and num_aces:
+            value -= 10
+            num_aces -= 1
+        return value
+
+    def print_hand(hand, title="Hand"):
+        print(f"\n{title}:")
+        for card in hand:
+            display_card(card)
+        print(f"Value: {calculate_hand_value(hand)}")
+
+    def print_intro():
+        os.system('cls' if os.name == 'nt' else 'clear')
+        print('.------.            _     _            _    _            _    ')
+        print('|A_  _ |.          | |   | |          | |  (_)          | |   ')
+        print('|( \/ ).-----.     | |__ | | __ _  ___| | ___  __ _  ___| | __')
+        print("| \  /|K /\  |     | '_ \\| |/ _` |/ __| |/ / |/ _` |/ __| |/ /")
+        print('|  \/ | /  \ |     | |_) | | (_| | (__|   <| | (_| | (__|   < ')
+        print('`-----| \\  / |     |_.__/|_|\\__,_|\\___|_|\\_\\_|\\__,_|\\___|_|\\_\\\\')
+        print('      |  \\/ K|                            _/ |                ')
+        print('      `------`                           |__/                 \n')
+        print(GREEN + "Let's play some Blackjack!" + RESET)
+        print(YELLOW + "1) Start Game" + RESET)
+        print(YELLOW + "2) View Tutorial" + RESET)
+        print(YELLOW + "3) Quit" + RESET)
+        
+    def print_tutorial():
+        os.system('cls' if os.name == 'nt' else 'clear')
+        print(GREEN + "Blackjack Tutorial" + RESET)
+        print("""
+        Welcome to Blackjack!
+
+        The goal of Blackjack is to get a hand value as close to 21 as possible without going over.
+
+        **Card Values:**
+        - Number cards (2-10) are worth their face value.
+        - Face cards (J, Q, K) are each worth 10 points.
+        - Aces can be worth 1 or 11 points, whichever is more beneficial.
+
+        **Gameplay:**
+        - You start with two cards, and the dealer also gets two cards (one face-up, one face-down).
+        - You can choose to 'Hit' (get another card) or 'Stand' (keep your current hand).
+        - If your hand value exceeds 21, you 'bust' and lose the game.
+        - The dealer must hit until their hand value is at least 17.
+        - If you have a higher hand value than the dealer without busting, you win. If the dealer busts, you also win.
+
+        **Commands:**
+        - Press 'H' to Hit.
+        - Press 'S' to Stand.
+        - To quit the game, press 'Q' at any time.
+
+        Good luck, and may the best hand win!
+        """)
+        input("\nPress Enter to return to the main menu...")
+
+
+    while True:
+        print_intro()
+        choice = input("Enter your choice (1,2 or 3): ")
+        if choice == '1':
+            player_hand = [deal_card(), deal_card()]
+            dealer_hand = [deal_card(), deal_card()]
+
+            while True:
+                os.system('cls' if os.name == 'nt' else 'clear')
+                print(GREEN + "Your Turn" + RESET)
+                print_hand(player_hand)
+                print(RED + "\nDealer's Face-Up Card:" + RESET)
+                display_card(dealer_hand[0])
+                
+                action = input("\nDo you want to (H)it or (S)tand? ").lower()
+                if action == 'h':
+                    player_hand.append(deal_card())
+                    if calculate_hand_value(player_hand) > 21:
+                        os.system('cls' if os.name == 'nt' else 'clear')
+                        print_hand(player_hand, "Busted Hand")
+                        print(RED + "You busted! Dealer wins." + RESET)
+                        break
+                elif action == 's':
+                    break
+                else:
+                    print(RED + "Invalid choice! Please enter H or S." + RESET)
+            
+            if calculate_hand_value(player_hand) <= 21:
+                os.system('cls' if os.name == 'nt' else 'clear')
+                print("\nDealer's Turn")
+                print_hand(dealer_hand)
+                while calculate_hand_value(dealer_hand) < 17:
+                    dealer_hand.append(deal_card())
+                    print_hand(dealer_hand)
+                
+                player_value = calculate_hand_value(player_hand)
+                dealer_value = calculate_hand_value(dealer_hand)
+                
+                if dealer_value > 21 or player_value > dealer_value:
+                    print(GREEN + "You win!" + RESET)
+                elif player_value < dealer_value:
+                    print(RED + "Dealer wins!" + RESET)
+                else:
+                    print(YELLOW + "It's a tie!" + RESET)
+            
+            input("\nPress Enter to return to the main menu...")
+              
+        elif choice == '2':
+            print_tutorial()
+        elif choice == '3':
+            print(GREEN + "Thanks for playing!" + RESET)
+            break
+        else:
+            print(RED + "Invalid choice! Please enter 1 or 2." + RESET)
+
+ 
 #News
 def fetch_news(category=None, query=None):
     params = {
