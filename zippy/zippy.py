@@ -3,6 +3,7 @@ import yt_dlp
 import random
 import requests
 import json
+import datetime
 
 api_key = 'f174e728b77748e08cdfffd339894c41'
 base_url = 'https://newsapi.org/v2/top-headlines'
@@ -11,23 +12,23 @@ if not os.path.exists('videos'):
     os.makedirs('videos')
 
 GREEN = "\033[32m"
-BLUE = "\033[34m"
+BLUE = "\033[36m"
 RESET = "\033[0m"
 YELLOW = "\033[33m"
+RED = '\033[91m'
 
 def zippy():
     os.system('cls')
-    print(' ________  ___  ________  ________  ___    ___ ')
-    print('|\_____  \|\  \|\   __  \|\   __  \|\  \  /  /|')
-    print(' \|___/  /\ \  \ \  \|\  \ \  \|\  \ \  \/  / /')
-    print('     /  / /\ \  \ \   ____\ \   ____\ \    / / ')
-    print('    /  /_/__\ \  \ \  \___|\ \  \___|\/  /  /  ')
-    print('   |\________\ \__\ \__\    \ \__\ __/  / /    ')
-    print('    \|_______|\|__|\|__|     \|__||\___/ /     ')
-    print('                                  \|___|/      ')
+    print('███████╗██╗██████╗ ██████╗ ██╗   ██╗')
+    print('╚══███╔╝██║██╔══██╗██╔══██╗╚██╗ ██╔╝')
+    print('╚══███╔╝██║██╔══██╗██╔══██╗╚██╗ ██╔╝')
+    print('  ███╔╝ ██║██████╔╝██████╔╝ ╚████╔╝ ')
+    print(' ███╔╝  ██║██╔═══╝ ██╔═══╝   ╚██╔╝  ')
+    print('███████╗██║██║     ██║        ██║   ')
+    print('╚══════╝╚═╝╚═╝     ╚═╝        ╚═╝   ')
     print('')
     print(f"{GREEN}[>] {RESET}{BLUE}Created By{RESET}   : ebola-cmd")
-    print(f"{GREEN}[>] {RESET}{BLUE}Version{RESET}      : 1.4")
+    print(f"{GREEN}[>] {RESET}{BLUE}Version{RESET}      : 1.5")
     print('')
     print(f"{YELLOW}[!] Select a Option :{RESET}")
     print('')
@@ -36,6 +37,8 @@ def zippy():
     print(f"{GREEN}[2] {RESET}{BLUE}Games")
     print(f"{GREEN}[3] {RESET}{BLUE}News")
     print(f"{GREEN}[4] {RESET}{BLUE}Fitness Tracker")
+    print(f"{GREEN}[5] {RESET}{BLUE}Flashcards")
+    print(f"{GREEN}[6] {RESET}{BLUE}Habit Tracker")
     print('')
     
     choice = input(f"{GREEN}[>]{RESET}")
@@ -53,6 +56,12 @@ def zippy():
         
     if choice == "4":
         main()
+        
+    if choice == "5":
+        flashcards()
+        
+    if choice == "6":
+        habit()
         
     else:
         input('invalid key')
@@ -665,6 +674,7 @@ def wordlefr():
         
     wordle()
     
+#News
 def fetch_news(category=None, query=None):
     params = {
         'apiKey': api_key,
@@ -684,7 +694,6 @@ def fetch_news(category=None, query=None):
     except requests.exceptions.RequestException as e:
         print(f"Network error: {e}")
         return []
-
 def display_news(articles):
     for i, article in enumerate(articles, 1):
         print(f"{i}. {article['title']}")
@@ -692,14 +701,12 @@ def display_news(articles):
         print(f"   Published At: {article['publishedAt']}")
         print(f"   URL: {article['url']}")
         print()
-
 def get_user_choice():
     print("Select the type of news you want:")
     print(f"{GREEN}[1] {RESET}{BLUE}World")
     print(f"{GREEN}[2] {RESET}{BLUE}Sports")
     choice = input(f"{GREEN}[>]{RESET}")
     return choice
-
 def get_sport_choice():
     print("Select the sport news you want:")
     print(f"{GREEN}[1] {RESET}{BLUE}Cricket")
@@ -707,7 +714,6 @@ def get_sport_choice():
     print(f"{GREEN}[3] {RESET}{BLUE}Basketball")
     choice = input(f"{GREEN}[>]{RESET}")
     return choice
-
 def run_news_aggregator():
     user_choice = get_user_choice()
     if user_choice == '1':
@@ -737,24 +743,18 @@ def run_news_aggregator():
     
     zippy()
 
-# Function to load data from a file
+#Fitness Tracker
 def load_data(filename="fitness_data.json"):
     try:
         with open(filename, "r") as file:
             return json.load(file)
     except FileNotFoundError:
         return {"workouts": [], "points": 0, "level": 1}
-
-# Function to save data to a file
 def save_data(data, filename="fitness_data.json"):
     with open(filename, "w") as file:
         json.dump(data, file, indent=4)
-
-# Function to calculate points for a workout
 def calculate_points(sets, reps, weight):
     return sets * reps * weight // 100 # Adjust this formula as needed
-
-# Function to add a workout entry
 def add_workout(data):
     date = input(f"{YELLOW}[!] Enter the date (YYYY-MM-DD) :{RESET} ")
     exercise = input(f"{YELLOW}[!] Enter the exercise name :{RESET} ")
@@ -778,8 +778,6 @@ def add_workout(data):
     print(f"Workout added successfully. You earned {points} points.")
 
     check_level_up(data)
-
-# Function to view all workouts
 def view_workouts(data):
     if not data["workouts"]:
         print("No workouts found.")
@@ -789,8 +787,6 @@ def view_workouts(data):
 
     print(f"\nTotal Points: {data['points']}")
     print(f"Current Level: {data['level']}")
-
-# Function to check and handle leveling up
 def check_level_up(data):
     level_thresholds = {1: 100, 2: 300, 3: 600, 4: 1000} # Example thresholds
 
@@ -801,8 +797,6 @@ def check_level_up(data):
         data["level"] += 1
         save_data(data)
         print(f"Congratulations! You've leveled up to Level {data['level']}.")
-
-# Function to display the main menu and handle user input
 def main():
     data = load_data()
 
@@ -826,5 +820,209 @@ def main():
         else:
             print("Invalid choice. Please try again.")
 
+def flashcards():
+    def load_flashcards(filename):
+        if not os.path.exists(filename) or os.path.getsize(filename) == 0:
+            return []
+        with open(filename, 'r') as file:
+            lines = file.read().strip().split('\n')
+            flashcards = []
+            for i in range(0, len(lines), 3):
+                if i+1 < len(lines):
+                    question = lines[i]
+                    answer = lines[i+1]
+                    flashcards.append({"question": question, "answer": answer})
+            return flashcards
+
+    def save_flashcards(filename, flashcards):
+        with open(filename, 'w') as file:
+            for flashcard in flashcards:
+                file.write(f"{flashcard['question']}\n")
+                file.write(f"{flashcard['answer']}\n")
+                file.write("\n")
+
+    def display_question(flashcard):
+        print(f"{BLUE}Question: {RESET}{flashcard['question']}")
+
+    def check_answer(flashcard, user_answer):
+        return flashcard["answer"].lower() == user_answer.lower()
+
+    def add_flashcard(flashcards):
+        question = input(f"{YELLOW}Enter the question: {RESET}")
+        answer = input(f"{YELLOW}Enter the answer: {RESET}")
+        flashcards.append({"question": question, "answer": answer})
+
+    def print_menu():
+        print("\n===== Flashcard App =====")
+        print(f"{YELLOW}[!] Select a Option :{RESET}")
+        print('')
+        print(f"{GREEN}[1] {RESET}{BLUE}Practice Flashcards{RESET}")
+        print(f"{GREEN}[2] {RESET}{BLUE}Add a New Flashcard{RESET}")
+        print(f"{GREEN}[3] {RESET}{BLUE}Quit{RESET}")
+
+    def main():
+        flashcards = load_flashcards('flashcards.txt')
+        
+        while True:
+            print_menu()
+            choice = input(f"{GREEN}[>]{RESET} ")
+            
+            if choice == '1':
+                if not flashcards:
+                    print(f"{RED}No flashcards are available. Please add some flashcards first.{RESET}")
+                else:
+                    random.shuffle(flashcards)
+                    score = 0
+                    for flashcard in flashcards:
+                        display_question(flashcard)
+                        user_answer = input(f"{YELLOW}Your answer: {RESET}")
+                        if check_answer(flashcard, user_answer):
+                            print(f"{GREEN}Correct!{RESET}")
+                            score += 1
+                        else:
+                            print(f"{RED}Wrong. The correct answer is {flashcard['answer']}{RESET}")
+                    print(f"{BLUE}Your final score is {score}/{len(flashcards)}{RESET}")
+            
+            elif choice == '2':
+                add_flashcard(flashcards)
+            
+            elif choice == '3':
+                save_flashcards('flashcards.txt', flashcards)
+                zippy()
+                break
+            
+            else:
+                print(f"{RED}Invalid choice. Please try again.{RESET}")
+
+    if __name__ == "__main__":
+        main()
+        
+def habit():
+    def progress_bar(percentage, bar_length=20):
+        bar_fill = '█'
+        bar_empty = '░'
+        filled_length = int(bar_length * percentage // 100)
+        bar = bar_fill * filled_length + bar_empty * (bar_length - filled_length)
+        return f"[{bar}] {percentage}%"
+
+    HABIT_FILE = "habits.json"
+
+    # Load habits from file
+    def load_habits():
+        if os.path.exists(HABIT_FILE):
+            with open(HABIT_FILE, 'r') as file:
+                return json.load(file)
+        else:
+            return {}
+
+    # Save habits to file
+    def save_habits(habits):
+        with open(HABIT_FILE, 'w') as file:
+            json.dump(habits, file, indent=4)
+
+    # Initialize habits
+    habits = load_habits()
+
+    # Update habit completion
+    def mark_habit_done(habit):
+        today = datetime.date.today().strftime("%Y-%m-%d")
+        if habit in habits:
+            if today not in habits[habit]["dates"]:
+                habits[habit]["dates"].append(today)
+                habits[habit]["streak"] += 1
+
+    # Add a new habit
+    def add_habit(habit):
+        if habit not in habits:
+            habits[habit] = {"dates": [], "streak": 0}
+
+    # Remove an existing habit
+    def remove_habit(habit):
+        if habit in habits:
+            del habits[habit]
+
+    # Create a progress bar
+    def progress_bar(percentage, bar_length=20):
+        bar_fill = '█'
+        bar_empty = '░'
+        filled_length = int(bar_length * percentage // 100)
+        bar = bar_fill * filled_length + bar_empty * (bar_length - filled_length)
+        return f"[{bar}] {percentage}%"
+
+    # Display the habit tracker
+    def display_habits():
+        os.system('cls' if os.name == 'nt' else 'clear')
+        print("+----------------------------------------------------------------------------------------------------+")
+        print("|                                           Habit Tracker                                            |")
+        print("+----------------------------------------------------------------------------------------------------+")
+        print("| Habit Name                   | Status Today     | Streak  | Progress                               |")
+        print("+----------------------------------------------------------------------------------------------------+")
+        
+        today = datetime.date.today().strftime("%Y-%m-%d")
+        
+        for habit, data in habits.items():
+            status = "Done" if today in data["dates"] else "Not Done"
+            streak = data["streak"]
+            progress = progress_bar(streak * 10)  # Example: each streak point equals 10%
+            print(f"| {habit.ljust(28)} | {status.ljust(16)} | {str(streak).ljust(6)} | {progress.ljust(14)} |")
+        
+        print("+---------------------------------------------------------------------------------------------------+")
+
+    # Display the main menu
+    def main_menu():
+        os.system('cls' if os.name == 'nt' else 'clear')
+        print(' ___  ___  ________  ________  ___  _________        _________  ________  ________  ________  ___  __    _______   ________     ')
+        print('|\  \|\  \|\   __  \|\   __  \|\  \|\___   ___\     |\___   ___\\   __  \|\   __  \|\   ____\|\  \|\  \ |\  ___ \ |\   __  \    ')
+        print('\ \  \\\  \ \  \|\  \ \  \|\ /\ \  \|___ \  \_|     \|___ \  \_\ \  \|\  \ \  \|\  \ \  \___|\ \  \/  /|\ \   __/|\ \  \|\  \   ')
+        print(' \ \   __  \ \   __  \ \   __  \ \  \   \ \  \           \ \  \ \ \   _  _\ \   __  \ \  \    \ \   ___  \ \  \_|/_\ \   _  _\  ')
+        print('  \ \  \ \  \ \  \ \  \ \  \|\  \ \  \   \ \  \           \ \  \ \ \  \\  \\ \  \ \  \ \  \____\ \  \\ \  \ \  \_|\ \ \  \\  \| ')
+        print('   \ \__\ \__\ \__\ \__\ \_______\ \__\   \ \__\           \ \__\ \ \__\\ _\\ \__\ \__\ \_______\ \__\\ \__\ \_______\ \__\\ _\ ')
+        print('    \|__|\|__|\|__|\|__|\|_______|\|__|    \|__|            \|__|  \|__|\|__|\|__|\|__|\|_______|\|__| \|__|\|_______|\|__|\|__|')
+        print('')
+        print(f"{YELLOW}[!] Select a Option :{RESET}")
+        print('')
+        print(f"{GREEN}[0]{RESET} {BLUE}View Habits{RESET}")
+        print(f"{GREEN}[1]{RESET} {BLUE}Mark Habit Done{RESET}")
+        print(f"{GREEN}[2]{RESET} {BLUE}Add Habit{RESET}")
+        print(f"{GREEN}[3]{RESET} {BLUE}Remove Habit{RESET}")
+        print(f"{GREEN}[4]{RESET} {BLUE}EXIT{RESET}")
+        print('')
+
+    # Main function
+    def main():
+        while True:
+            main_menu()
+            choice = input("Choose an option: ")
+            if choice == "0":
+                display_habits()
+                input("Press Enter to return to the menu...")
+            elif choice == "1":
+                habit = input("Enter the habit to mark as done: ")
+                mark_habit_done(habit)
+                save_habits(habits)
+                print(f"Habit '{habit}' marked as done for today.")
+                input("Press Enter to return to the menu...")
+            elif choice == "2":
+                habit = input("Enter the habit to add: ")
+                add_habit(habit)
+                save_habits(habits)
+                print(f"Habit '{habit}' added successfully.")
+                input("Press Enter to return to the menu...")
+            elif choice == "3":
+                habit = input("Enter the habit to remove: ")
+                remove_habit(habit)
+                save_habits(habits)
+                print(f"Habit '{habit}' removed successfully.")
+                input("Press Enter to return to the menu...")
+            elif choice == "4":
+                print("Exiting the habit tracker. Keep up the good work!")
+                zippy()
+                break
+            else:
+                print("Invalid choice, please try again.")
+                input("Press Enter to return to the menu...")
+
+    if __name__ == "__main__":
+        main()
 
 zippy()

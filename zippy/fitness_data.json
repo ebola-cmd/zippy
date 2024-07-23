@@ -1,0 +1,30 @@
+{
+    "workouts": [
+        {
+            "date": "2024-7-20",
+            "exercise": "pushups",
+            "sets": 2,
+            "reps": 10,
+            "weight": 20.0,
+            "points": 4.0
+        },
+        {
+            "date": "2024-07-21",
+            "exercise": "pushups",
+            "sets": 1,
+            "reps": 10,
+            "weight": 20.0,
+            "points": 2.0
+        },
+        {
+            "date": "2024-07-22",
+            "exercise": "pushups",
+            "sets": 1,
+            "reps": 10,
+            "weight": 20.0,
+            "points": 2.0
+        }
+    ],
+    "points": 8.0,
+    "level": 1
+}
