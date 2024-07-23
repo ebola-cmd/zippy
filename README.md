@@ -1,6 +1,6 @@
 Zippy
 
-![image](https://github.com/user-attachments/assets/433e9828-a972-4749-8f9c-112c405a0b22)
+![image](https://github.com/user-attachments/assets/934f43ab-784d-49af-ba60-9f10def23273)
 
 
 Zippy is a Python project designed to perform various tasks efficiently. It provides a range of features aimed at simplifying complex operations and enhancing productivity.
